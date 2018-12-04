@@ -1,0 +1,10 @@
+node_modules
+# for some reason netlify-lambda builds to `src` and that can't be changed 🙃
+src
+.DS_Store
+.env
+
+# these cause more harm than good
+# when working with contributors
+package-lock.json
+yarn.lock

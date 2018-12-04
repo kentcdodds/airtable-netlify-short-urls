@@ -1,0 +1,21 @@
+{
+  "name": "airtable-netlify-short-urls",
+  "version": "1.0.0",
+  "private": true,
+  "description": "URL shortener with an airtable backend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "netlify-lambda serve functions",
+    "build": "netlify-lambda build functions"
+  },
+  "keywords": [],
+  "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
+  "license": "MIT",
+  "devDependencies": {
+    "netlify-lambda": "^1.1.0"
+  },
+  "dependencies": {
+    "airtable": "^0.5.8",
+    "dotenv": "^6.1.0"
+  }
+}
