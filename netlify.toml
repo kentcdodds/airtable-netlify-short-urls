@@ -3,13 +3,7 @@
   functions = "src/"
 
 [[redirects]]
-  from = "/_*"
-  to = "/_:splat"
-  status = 200
-  force = true
-
-[[redirects]]
   from = "/:code"
-  to = "/_redirect?short=:code"
+  to = "/.netlify/functions/redirect?short=:code"
   status = 301
   force = true
