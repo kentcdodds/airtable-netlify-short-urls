@@ -9,7 +9,7 @@
   force = true
 
 [[redirects]]
-  from = "/*"
-  to = "/_redirect?short=:splat"
+  from = "/:code"
+  to = "/_redirect?short=:code"
   status = 301
   force = true
