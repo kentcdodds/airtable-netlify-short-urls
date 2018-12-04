@@ -3,6 +3,12 @@
   functions = "src/"
 
 [[redirects]]
+  from = "/_*"
+  to = "/_:splat"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/*"
   to = "/_redirect?short=:splat"
   status = 301
