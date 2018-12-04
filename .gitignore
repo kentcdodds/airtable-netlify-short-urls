@@ -1,6 +1,5 @@
 node_modules
-# for some reason netlify-lambda builds to `src` and that can't be changed 🙃
-src
+.netlify
 .DS_Store
 .env
 

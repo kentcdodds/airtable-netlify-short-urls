@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"
-  functions = "src/"
+  functions = ".netlify/functions/"
 
 [[redirects]]
   from = "/:code"

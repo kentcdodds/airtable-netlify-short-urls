@@ -28,7 +28,6 @@ exports.handler = async event => {
     return getResponse({longLink, statusCode: 301})
   } catch (error) {
     console.log(error.stack)
-    // ignore
     console.log('there was an error and we are ignoring it...')
   }
 
@@ -40,18 +39,18 @@ exports.handler = async event => {
 
     return {
       statusCode,
+      body,
       headers: {
         Location: longLink,
         // these headers I got by curling a bit.ly URL
         // and just doing what they do.
         'Cache-Control': 'private, max-age=90',
-        'Content-Security-Policy': 'referrer always',
         'Content-Length': body.length,
         'Content-Type': 'text/html; charset=utf-8',
         Connection: 'close',
+        'Content-Security-Policy': 'referrer always',
         'Referrer-Policy': 'unsafe-url',
       },
-      body,
     }
   }
 }
