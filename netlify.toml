@@ -3,6 +3,10 @@
   functions = ".netlify/functions/"
 
 [[redirects]]
+  from = "/"
+  to = "/.netlify/functions/redirect"
+
+[[redirects]]
   from = "/:code"
   to = "/.netlify/functions/redirect?short=:code"
   status = 301
