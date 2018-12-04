@@ -9,5 +9,5 @@
 [[redirects]]
   from = "/:code"
   to = "/.netlify/functions/redirect?short=:code"
-  status = 301
+  status = 200
   force = true
