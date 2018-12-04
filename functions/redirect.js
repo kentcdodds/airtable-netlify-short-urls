@@ -45,7 +45,7 @@ exports.handler = async event => {
         // these headers I got by curling a bit.ly URL
         // and just doing what they do.
         'Cache-Control': 'private, max-age=90',
-        'Content-Length': body.length,
+        'Content-Length': String(body.length),
         'Content-Type': 'text/html; charset=utf-8',
         Connection: 'close',
         'Content-Security-Policy': 'referrer always',
