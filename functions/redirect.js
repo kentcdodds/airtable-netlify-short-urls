@@ -27,7 +27,11 @@ exports.handler = async event => {
     const longLink = result[0].get(longLinkField)
     return getResponse({longLink, statusCode: 301})
   } catch (error) {
-    console.log(error.stack)
+    if (error.stack) {
+      console.log(error.stack)
+    } else {
+      console.log(error)
+    }
     console.log('there was an error and we are ignoring it...')
   }
 
