@@ -4,17 +4,21 @@ const fs = require('fs')
 const defaultRedirectURL = getEnv('DEFAULT_REDIRECT_URL')
 
 exports.handler = async event => {
+  // just something for grouping the netlify logs for this run together
+  const runId = Date.now()
+    .toString()
+    .slice(-5)
+  const log = (...args) => console.log(runId, ...args)
+
   const {host = ''} = event.headers
   const {code} = event.queryStringParameters
   if (!code) {
-    console.log(`no code query param provided`)
+    log(`no code query param provided`)
     return getResponse()
   }
   const codeLength = code.length
   if (codeLength > 20) {
-    console.log(
-      `short code "${code}" is ${codeLength} characters long. Sounds fishy.`,
-    )
+    log(`short code "${code}" is ${codeLength} characters long. Sounds fishy.`)
     return getResponse()
   }
   try {
@@ -24,7 +28,7 @@ exports.handler = async event => {
     const shortCodeField = getEnv('AIRTABLE_SHORT_CODE_FIELD', 'Short Code')
     const longLinkField = getEnv('AIRTABLE_LONG_LINK_FIELD', 'Long Link')
     const Airtable = require('airtable')
-    console.log(`Attempting to get long link for code "${code}"`)
+    log(`Attempting to get long link for code "${code}"`)
     const result = await new Airtable({apiKey})
       .base(base)(table)
       .select({
@@ -37,23 +41,23 @@ exports.handler = async event => {
     if (longLink) {
       return getResponse({longLink, statusCode: 301})
     } else {
-      console.log(`There was no Long Link associated with "${code}".`)
+      log(`There was no Long Link associated with "${code}".`)
       return getResponse()
     }
   } catch (error) {
     if (error.stack) {
-      console.log(error.stack)
+      log(error.stack)
     } else {
-      console.log(error)
+      log(error)
     }
-    console.log('!! there was an error and we are ignoring it... !!')
+    log('!! there was an error and we are ignoring it... !!')
   }
 
   return getResponse()
 
   function getResponse({longLink = defaultRedirectURL, statusCode = 302} = {}) {
     const title = `${host}/${code || ''}`
-    console.log(`> redirecting: ${title} -> ${longLink}`)
+    log(`> redirecting: ${title} -> ${longLink}`)
     const body = `<html><head><title>${title}</title></head><body><a href="${longLink}">moved here</a></body></html>`
     const cacheHeaders = JSON.parse(getEnv('ENABLE_CACHE', 'false'))
       ? {

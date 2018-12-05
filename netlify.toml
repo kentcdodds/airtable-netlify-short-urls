@@ -12,4 +12,3 @@
   status = 200
   force = true
   headers = {X-Short-Code = ":code"}
-

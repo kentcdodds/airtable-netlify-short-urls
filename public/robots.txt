@@ -1,0 +1,3 @@
+# Hello robot
+User-Agent: *
+Disallow:
