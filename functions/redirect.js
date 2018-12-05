@@ -59,7 +59,10 @@ exports.handler = async event => {
         // entirely disable the cache for now until I can find a way
         // for the cache to take the query paremeter into consideration
         'Cache-Control': 'public, max-age=10080', // 10080 seconds is 1 week
+        // this is set by the redirect logic because the query string
+        // is not taken into account by the caching mechanism for some reason
         Vary: 'X-Short-Code',
+        'X-Short-Code': code, // may as well return it just in case I guess?
         // these headers I got by curling a bit.ly URL
         // and just doing what they do.
         'Content-Length': String(body.length),
