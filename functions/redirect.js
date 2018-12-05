@@ -54,7 +54,7 @@ exports.handler = async event => {
   function getResponse({longLink = defaultRedirectURL, statusCode = 302} = {}) {
     const title = `${host}/${code || ''}`
     console.log(`> redirecting: ${title} -> ${longLink}`)
-    const body = `<html><head><title>${title}</title></head><body><a href="${longLink}">moved here</a></body>`
+    const body = `<html><head><title>${title}</title></head><body><a href="${longLink}">moved here</a></body></html>`
     const cacheHeaders = JSON.parse(getEnv('ENABLE_CACHE', 'false'))
       ? {
           // entirely disable the cache for now until I can find a way
