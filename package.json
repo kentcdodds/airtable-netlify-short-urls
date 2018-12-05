@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "netlify-lambda serve functions",
-    "build": "netlify-lambda build functions"
+    "build": "netlify-lambda build functions",
+    "update": "git fetch upstream && git reset --hard upstream/master && git push -f"
   },
   "keywords": [],
   "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
