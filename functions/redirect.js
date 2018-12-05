@@ -3,7 +3,7 @@ const fs = require('fs')
 
 const defaultRedirectURL = getEnv('DEFAULT_REDIRECT_URL')
 
-exports.handler = async event => {
+exports.handler = async (event, context) => {
   // just something for grouping the netlify logs for this run together
   const runId = Date.now()
     .toString()
@@ -11,7 +11,7 @@ exports.handler = async event => {
   const log = (...args) => console.log(runId, ...args)
 
   const {host = ''} = event.headers
-  const {code} = event.queryStringParameters
+  const code = event.path.replace(/\/redirect\/?/, '')
   if (!code) {
     log(`no code query param provided`)
     return getResponse()
