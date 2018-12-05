@@ -2,6 +2,12 @@ require('dotenv').config()
 const fs = require('fs')
 
 const defaultRedirectURL = getEnv('DEFAULT_REDIRECT_URL')
+const cacheBusterCode = getEnv('CACHE_BUSTER_CODE', '_bust-cache')
+
+// I guess functions exist for a while in memory, so this can help
+// us avoid having to call airtable for the same link during that time.
+let fakeCache = {}
+const bustCache = () => (fakeCache = {})
 
 exports.handler = async (event, context) => {
   // just something for grouping the netlify logs for this run together
@@ -16,10 +22,18 @@ exports.handler = async (event, context) => {
     log(`no code query param provided`)
     return getResponse()
   }
+  if (code === cacheBusterCode) {
+    bustCash()
+    return
+  }
   const codeLength = code.length
   if (codeLength > 50) {
-    log(`short code "${code}" is ${codeLength} characters long. Sounds fishy.`)
+    log(`short code "${code}" is ${codeLength} characters long. Seems fishy.`)
     return getResponse()
+  }
+  if (fakeCache[code]) {
+    log(`short code "${code}" exists in our in-memory cache.`)
+    return getResponse({longLink: fakeCache[code], statusCode: 301})
   }
   try {
     const apiKey = getEnv('AIRTABLE_KEY')
@@ -39,6 +53,7 @@ exports.handler = async (event, context) => {
       .firstPage()
     const longLink = result[0].get(longLinkField)
     if (longLink) {
+      fakeCache[code] = longLink
       return getResponse({longLink, statusCode: 301})
     } else {
       log(`There was no Long Link associated with "${code}".`)
