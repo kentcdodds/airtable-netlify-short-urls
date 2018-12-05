@@ -27,11 +27,13 @@ AIRTABLE_BASE -> *****************
 AIRTABLE_TABLE -> URLs
 AIRTABLE_SHORT_CODE_FIELD -> Short Code
 AIRTABLE_LONG_LINK_FIELD -> Long Link
+ENABLE_CACHE -> false
 ```
 
-> Note: `AIRTABLE_TABLE`, `AIRTABLE_SHORT_CODE_FIELD`, and
-> `AIRTABLE_LONG_LINK_FIELD` are showing the default values above. If that's
-> what you call your table and fields then you don't need to set those variables
+> Note: `AIRTABLE_TABLE`, `AIRTABLE_SHORT_CODE_FIELD`,
+> `AIRTABLE_LONG_LINK_FIELD`, and `ENABLE_CACHE` are showing the default values
+> above. If that's what you call your table and fields then you don't need to
+> set those variables.
 
 > Note also that you can use a `.env` file instead, just don't commit this to
 > source control :) (this is useful for local development as `.env` is in the
@@ -51,3 +53,7 @@ then verify that the redirect works with the custom domain.
 
 Now, go get CloudFlare setup with your custom domain to prevent your function
 from being called more than airtable's rate limiting can handle.
+
+If you're not using CloudFlare, then set `ENABLE_CACHE` to `true` so you can get
+some caching from Netlify. That always seemed to not work very well for me
+though (which is one reason I use CloudFlare instead) so good luck.
