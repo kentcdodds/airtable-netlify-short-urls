@@ -17,7 +17,7 @@ exports.handler = async event => {
     return getResponse()
   }
   const codeLength = code.length
-  if (codeLength > 20) {
+  if (codeLength > 50) {
     log(`short code "${code}" is ${codeLength} characters long. Sounds fishy.`)
     return getResponse()
   }
