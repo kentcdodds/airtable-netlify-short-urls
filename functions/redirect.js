@@ -67,7 +67,7 @@ exports.handler = async event => {
         Location: longLink,
         // this needs to be enabled... but I'm really struggling on how to make
         // it work properly...
-        // 'Cache-Control': 'public, max-age=10080', // 10080 seconds is 1 week
+        'Cache-Control': 'public, max-age=10080', // 10080 seconds is 1 week
         // these headers I got by curling a bit.ly URL
         // and just doing what they do.
         'Content-Length': String(body.length),
