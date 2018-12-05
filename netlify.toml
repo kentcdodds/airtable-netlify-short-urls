@@ -11,3 +11,5 @@
   to = "/.netlify/functions/redirect?code=:code"
   status = 200
   force = true
+  headers = {X-Short-Code = ":code"}
+

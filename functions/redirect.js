@@ -56,11 +56,12 @@ exports.handler = async event => {
       body,
       headers: {
         Location: longLink,
+        // entirely disable the cache for now until I can find a way
+        // for the cache to take the query paremeter into consideration
+        'Cache-Control': 'public, max-age=10080', // 10080 seconds is 1 week
+        Vary: 'X-Short-Code',
         // these headers I got by curling a bit.ly URL
         // and just doing what they do.
-        // reduce caching significantly for now... Want to increase it though...
-        'Cache-Control': 'public, max-age=20',
-        // 'Cache-Control': 'public, max-age=10080', // 10080 seconds is 1 week
         'Content-Length': String(body.length),
         'Content-Type': 'text/html; charset=utf-8',
         Connection: 'close',
