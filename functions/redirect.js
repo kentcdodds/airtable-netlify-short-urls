@@ -17,7 +17,7 @@ exports.handler = async (event, context) => {
   const log = (...args) => console.log(runId, ...args)
 
   const {host = ''} = event.headers
-  const code = event.path.replace(/\/redirect\/?/, '')
+  const code = event.path.replace(/\/^.*redirect\/?/, '')
   if (!code) {
     log(`no code query param provided`)
     return getResponse()
