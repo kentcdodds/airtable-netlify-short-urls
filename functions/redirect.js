@@ -17,7 +17,7 @@ exports.handler = async (event, context) => {
   const log = (...args) => console.log(runId, ...args)
 
   const {host = ''} = event.headers
-  log(`Request coming to ${event.path}`)
+  log(`Request coming to "${event.path}"`)
   const [, code] = event.path.match(/^.*?redirect\/?(.*)$/) || [event.path, '']
   if (!code) {
     log(`no code query param provided`)
