@@ -4,7 +4,7 @@ const fs = require('fs')
 const defaultRedirectURL = getEnv('DEFAULT_REDIRECT_URL')
 
 exports.handler = async event => {
-  const {host} = event.headers
+  const {host = ''} = event.headers
   const {code} = event.queryStringParameters
   if (!code) {
     console.log(`no code query param provided`)
