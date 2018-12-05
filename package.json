@@ -13,6 +13,7 @@
   "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
   "license": "MIT",
   "devDependencies": {
+    "copy-paste": "^1.3.0",
     "netlify-lambda": "^1.1.0"
   },
   "dependencies": {
