@@ -5,8 +5,16 @@ const defaultRedirectURL = getEnv('DEFAULT_REDIRECT_URL')
 
 exports.handler = async event => {
   const {host} = event.headers
-  const {short} = event.queryStringParameters
-  if (!short || short.length > 20) {
+  const {code} = event.queryStringParameters
+  if (!code) {
+    console.log(`no code query param provided`)
+    return getResponse()
+  }
+  const codeLength = code.length
+  if (codeLength > 20) {
+    console.log(
+      `short code "${code}" is ${codeLength} characters long. Sounds fishy.`,
+    )
     return getResponse()
   }
   try {
@@ -16,12 +24,13 @@ exports.handler = async event => {
     const shortCodeField = getEnv('AIRTABLE_SHORT_CODE_FIELD', 'Short Code')
     const longLinkField = getEnv('AIRTABLE_LONG_LINK_FIELD', 'Long Link')
     const Airtable = require('airtable')
+    console.log(`Attempting to get long link for code "${code}"`)
     const result = await new Airtable({apiKey})
       .base(base)(table)
       .select({
         maxRecords: 1,
         fields: [longLinkField],
-        filterByFormula: `{${shortCodeField}} = "${short}"`,
+        filterByFormula: `{${shortCodeField}} = "${code}"`,
       })
       .firstPage()
     const longLink = result[0].get(longLinkField)
@@ -32,13 +41,14 @@ exports.handler = async event => {
     } else {
       console.log(error)
     }
-    console.log('there was an error and we are ignoring it...')
+    console.log('!! there was an error and we are ignoring it... !!')
   }
 
   return getResponse()
 
   function getResponse({longLink = defaultRedirectURL, statusCode = 302} = {}) {
-    const title = `${host}/${short || ''}`
+    console.log(`> redirecting to ${longLink}`)
+    const title = `${host}/${code || ''}`
     const body = `<html><head><title>${title}</title></head><body><a href="${longLink}">moved here</a></body>`
 
     return {

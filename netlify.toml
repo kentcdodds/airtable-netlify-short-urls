@@ -8,6 +8,6 @@
 
 [[redirects]]
   from = "/:code"
-  to = "/.netlify/functions/redirect?short=:code"
+  to = "/.netlify/functions/redirect?code=:code"
   status = 200
   force = true
