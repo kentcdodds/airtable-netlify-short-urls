@@ -34,7 +34,12 @@ exports.handler = async event => {
       })
       .firstPage()
     const longLink = result[0].get(longLinkField)
-    return getResponse({longLink, statusCode: 301})
+    if (longLink) {
+      return getResponse({longLink, statusCode: 301})
+    } else {
+      console.log(`There was no Long Link associated with "${code}".`)
+      return getResponse()
+    }
   } catch (error) {
     if (error.stack) {
       console.log(error.stack)
