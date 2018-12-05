@@ -58,7 +58,9 @@ exports.handler = async event => {
         Location: longLink,
         // these headers I got by curling a bit.ly URL
         // and just doing what they do.
-        'Cache-Control': 'public, max-age=10080', // 10080 seconds is 1 week
+        // reduce caching significantly for now... Want to increase it though...
+        'Cache-Control': 'public, max-age=20',
+        // 'Cache-Control': 'public, max-age=10080', // 10080 seconds is 1 week
         'Content-Length': String(body.length),
         'Content-Type': 'text/html; charset=utf-8',
         Connection: 'close',
