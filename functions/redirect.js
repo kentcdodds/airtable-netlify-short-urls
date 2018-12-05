@@ -59,24 +59,13 @@ exports.handler = async event => {
     const title = `${host}/${code || ''}`
     log(`> redirecting: ${title} -> ${longLink}`)
     const body = `<html><head><title>${title}</title></head><body><a href="${longLink}">moved here</a></body></html>`
-    const cacheHeaders = JSON.parse(getEnv('ENABLE_CACHE', 'false'))
-      ? {
-          // entirely disable the cache for now until I can find a way
-          // for the cache to take the query paremeter into consideration
-          'Cache-Control': 'public, max-age=10080', // 10080 seconds is 1 week
-          // this is set by the redirect logic because the query string
-          // is not taken into account by the caching mechanism for some reason
-          Vary: 'X-Short-Code',
-          'X-Short-Code': code, // may as well return it just in case I guess?
-        }
-      : null
 
     return {
       statusCode,
       body,
       headers: {
         Location: longLink,
-        ...cacheHeaders,
+        'Cache-Control': 'public, max-age=10080', // 10080 seconds is 1 week
         // these headers I got by curling a bit.ly URL
         // and just doing what they do.
         'Content-Length': String(body.length),
