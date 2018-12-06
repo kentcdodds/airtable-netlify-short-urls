@@ -24,6 +24,7 @@ exports.handler = async (event, context) => {
     return getResponse({statusCode: 301})
   }
   if (code === cacheBusterCode) {
+    log('busting the cache')
     bustCache()
     return {statusCode: 200, body: 'cache busted'}
   }
