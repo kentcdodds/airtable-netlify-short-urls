@@ -20,12 +20,12 @@ exports.handler = async (event, context) => {
   log(`Request coming to "${event.path}"`)
   const [, code] = event.path.match(/^.*?redirect\/?(.*)$/) || [event.path, '']
   if (!code) {
-    log(`no code query param provided`)
-    return getResponse()
+    log(`no code provided`)
+    return getResponse({statusCode: 301})
   }
   if (code === cacheBusterCode) {
-    bustCash()
-    return
+    bustCache()
+    return {statusCode: 200, body: 'cache busted'}
   }
   const codeLength = code.length
   if (codeLength > 50) {
