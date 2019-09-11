@@ -1,4 +1,7 @@
+
 # airtable-netlify-short-urls
+
+:warning: **There's a simpler version using [Netlify redirects](https://www.netlify.com/docs/redirects/) instead of Airtable [here](https://github.com/kentcdodds/netlify-shortener)** 
 
 This is a simple short-url service that works with
 [netlify functions](https://www.netlify.com/docs/functions/) and uses
